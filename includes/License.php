@@ -36,7 +36,7 @@ class License {
                 return $this->cache;
             }
             
-            $client = @\RT_Linky_License_Client::get_instance();
+            $client = \RT_Linky_License_Client::get_instance();
             
             if (!is_object($client)) {
                 return $this->cache;
@@ -51,9 +51,7 @@ class License {
             if (is_array($license_data) && isset($license_data['status'])) {
                 $this->cache = ($license_data['status'] === 'active');
             }
-        } catch (\Exception $e) {
-            $this->cache = false;
-        } catch (\Error $e) {
+        } catch (\Throwable $e) {
             $this->cache = false;
         }
         

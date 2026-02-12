@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('RT_LINKY_VERSION', '3.0.1');
+define('RT_LINKY_VERSION', '3.0.2');
 define('RT_LINKY_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('RT_LINKY_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('RT_LINKY_PLUGIN_BASENAME', plugin_basename(__FILE__));
@@ -89,7 +89,8 @@ class RTLinkyPlugin {
             if (class_exists('RTLinky\RestApi')) {
                 new RTLinky\RestApi();
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
+            // Fängt Exception UND Error ab
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 error_log('RT-Linky Fehler: ' . $e->getMessage());
             }
@@ -153,7 +154,7 @@ class RTLinkyPlugin {
             if (!$license->isPro() && $license->getProfileCount() >= 2) {
                 set_transient('rt_linky_limit_notice', true, DAY_IN_SECONDS);
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // Ignoriere Fehler
         }
     }
