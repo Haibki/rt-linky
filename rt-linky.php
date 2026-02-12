@@ -4,7 +4,7 @@
  * Plugin URI: https://rettoro.de/rt-linky
  * Description: Ein moderner Link-in-Bio Generator für WordPress
  * Version: 3.0.1
- * Author: Haibki by Rettoro
+ * Author: Haibki für Rettoro
  * Author URI: https://www.rettoro.de
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -47,9 +47,13 @@ if (file_exists(__DIR__ . '/class-license-client.php')) {
 }
 
 // Unsere neuen Klassen laden - nur wenn Dateien existieren
-if (is_dir(__DIR__ . '/includes')) {
+if (file_exists(__DIR__ . '/includes/License.php')) {
     require_once __DIR__ . '/includes/License.php';
+}
+if (file_exists(__DIR__ . '/includes/Admin.php')) {
     require_once __DIR__ . '/includes/Admin.php';
+}
+if (file_exists(__DIR__ . '/includes/RestApi.php')) {
     require_once __DIR__ . '/includes/RestApi.php';
 }
 

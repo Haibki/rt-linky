@@ -17,29 +17,40 @@ class License {
             return $this->cache;
         }
         
+        $this->cache = false;
+        
         if (class_exists('RT_Linky_License_Client')) {
             $client = \RT_Linky_License_Client::get_instance();
             
+            if (!is_object($client)) {
+                return false;
+            }
+            
             if (method_exists($client, 'is_active')) {
-                $this->cache = $client->is_active();
+                $this->cache = (bool) $client->is_active();
                 return $this->cache;
             }
             
             $license_data = get_option('rt_linky_license_client_license_data');
-            if ($license_data && isset($license_data['status'])) {
+            if (is_array($license_data) && isset($license_data['status'])) {
                 $this->cache = ($license_data['status'] === 'active');
                 return $this->cache;
             }
         }
         
         $license = get_option('rt_linky_license');
-        $this->cache = !empty($license['active']) && $license['active'] === true;
+        if (is_array($license) && !empty($license['active'])) {
+            $this->cache = true;
+        }
         
         return $this->cache;
     }
     
     public function getProfileCount() {
         $count = wp_count_posts('rt_linky_profile');
+        if (!is_object($count)) {
+            return 0;
+        }
         return intval($count->publish) + intval($count->draft);
     }
     
@@ -54,6 +65,7 @@ class License {
         if ($this->isPro()) {
             return 'unlimited';
         }
-        return max(0, 2 - $this->getProfileCount());
+        $remaining = 2 - $this->getProfileCount();
+        return max(0, $remaining);
     }
 }

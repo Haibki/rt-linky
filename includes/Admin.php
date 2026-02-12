@@ -4,7 +4,7 @@ namespace RTLinky;
 class Admin {
     
     public function __construct() {
-        add_action('admin_menu', [$this, 'addMenuPages'], 9);
+        add_action('admin_menu', [$this, 'addMenuPages']);
         add_action('admin_enqueue_scripts', [$this, 'enqueueAssets']);
     }
     
@@ -51,7 +51,7 @@ class Admin {
     public function renderLicensePage() {
         $license = License::getInstance();
         $isPro = $license->isPro();
-        $count = $license->getProfileCount();
+        $count = intval($license->getProfileCount());
         $remaining = $license->getRemainingProfiles();
         ?>
         <div class="wrap rt-linky-license-page">
