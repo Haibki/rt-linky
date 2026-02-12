@@ -1,9 +1,9 @@
 /**
  * RT-Linky Admin React App
  */
-const { useState, useEffect } = useState, useEffect;
+const { useState, useEffect } = wp.element;
 const { createElement: el } = wp.element;
-const { Button, TextControl, SelectControl, ToggleControl, BaseControl, Icon } = wp.components;
+const { Button, TextControl, SelectControl, BaseControl } = wp.components;
 const apiFetch = wp.apiFetch;
 
 // Icons Mapping
@@ -82,9 +82,9 @@ const App = () => {
                 method: 'POST',
                 data: profile,
             });
-            alert('Profil gespeichert!');
+            alert(rtLinkyAdmin.strings.saveSuccess);
         } catch (error) {
-            alert(error.message || 'Fehler beim Speichern');
+            alert(error.message || rtLinkyAdmin.strings.saveError);
         } finally {
             setSaving(false);
         }
@@ -112,11 +112,10 @@ const App = () => {
     };
 
     const updateLink = (index, field, value) => {
-        // Icon-Validierung für Free
         if (field === 'icon' && !license.isPro) {
             const freeIcons = ['link', 'email'];
             if (!freeIcons.includes(value)) {
-                alert('Dieses Icon ist nur in der Pro-Version verfügbar');
+                alert(rtLinkyAdmin.strings.proFeature);
                 return;
             }
         }
@@ -166,7 +165,7 @@ const App = () => {
     }
 
     return el('div', { className: 'rt-linky-admin' }, [
-        // Header mit Lizenz-Badge
+        // Header
         el('div', { key: 'header', className: 'rt-linky-header' }, [
             el('h2', { key: 'title' }, 'Link-in-Bio Editor'),
             el('span', {
@@ -175,7 +174,7 @@ const App = () => {
             }, license.isPro ? '⭐ PRO' : '🔒 FREE'),
         ]),
 
-        // Profil-Einstellungen
+        // Profil Einstellungen
         el('div', { key: 'profile', className: 'rt-linky-section' }, [
             el('h3', { key: 'title' }, 'Profil'),
             
@@ -224,7 +223,6 @@ const App = () => {
                 onChange: (value) => setProfile({ ...profile, backgroundColor: value }),
             }),
 
-            // Hintergrundbild (nur Pro)
             el(BaseControl, {
                 key: 'bg-image-control',
                 label: `Hintergrundbild ${!license.isPro ? '(Nur Pro)' : ''}`,
@@ -272,32 +270,28 @@ const App = () => {
                 }, 'Max. 2 Links in Free-Version'),
             ]),
 
-            // Links Liste
             el('div', { key: 'links-list', className: 'rt-linky-links' },
                 profile.links.map((link, index) => 
                     el('div', {
                         key: link.id,
                         className: 'rt-linky-link-item',
                     }, [
-                        // Drag Handle
                         el('span', {
                             key: 'handle',
                             className: 'rt-linky-handle',
                         }, '⋮⋮'),
 
-                        // Icon Select
                         el(SelectControl, {
                             key: 'icon',
                             value: link.icon,
                             options: Object.entries(ICONS).map(([value, data]) => ({
                                 value,
-                                label: `${data.icon} ${data.label}`,
+                                label: `${data} ${value}`,
                                 disabled: !license.isPro && !['link', 'email'].includes(value),
                             })),
                             onChange: (value) => updateLink(index, 'icon', value),
                         }),
 
-                        // Titel
                         el(TextControl, {
                             key: 'title',
                             placeholder: 'Link-Titel',
@@ -305,7 +299,6 @@ const App = () => {
                             onChange: (value) => updateLink(index, 'title', value),
                         }),
 
-                        // URL
                         el(TextControl, {
                             key: 'url',
                             placeholder: 'https://...',
@@ -313,7 +306,6 @@ const App = () => {
                             onChange: (value) => updateLink(index, 'url', value),
                         }),
 
-                        // Untertitel (nur Pro)
                         license.isPro && el(TextControl, {
                             key: 'subtitle',
                             placeholder: 'Untertitel (optional)',
@@ -321,7 +313,6 @@ const App = () => {
                             onChange: (value) => updateLink(index, 'subtitle', value),
                         }),
 
-                        // Aktionen
                         el('div', {
                             key: 'actions',
                             className: 'rt-linky-link-actions',
@@ -352,7 +343,6 @@ const App = () => {
                 )
             ),
 
-            // Add Link Button
             el(Button, {
                 key: 'add-btn',
                 onClick: addLink,
@@ -362,7 +352,7 @@ const App = () => {
             }, '+ Link hinzufügen'),
         ]),
 
-        // Speichern
+        // Speichern Button
         el('div', { key: 'footer', className: 'rt-linky-footer' }, [
             el(Button, {
                 key: 'save',
@@ -375,8 +365,10 @@ const App = () => {
     ]);
 };
 
-// Render
-const root = document.getElementById('rt-linky-root');
-if (root) {
-    wp.element.render(el(App), root);
-}
+// Render App
+document.addEventListener('DOMContentLoaded', () => {
+    const root = document.getElementById('rt-linky-root');
+    if (root) {
+        wp.element.render(el(App), root);
+    }
+});

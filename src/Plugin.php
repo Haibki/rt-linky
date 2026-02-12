@@ -17,12 +17,15 @@ class Plugin {
     }
     
     private function __construct() {
-        add_action('init', [$this, 'init']);
+        add_action('init', [$this, 'init'], 0);
     }
     
     public function init(): void {
-        // Post Type registrieren
-        new PostType\ProfilePostType();
+        // Post Type registrieren - WICHTIG: Priority 0 damit es früh geladen wird
+        add_action('init', function() {
+            $postType = new PostType\ProfilePostType();
+            $postType->register();
+        }, 1);
         
         // Admin-Bereich
         if (is_admin()) {
