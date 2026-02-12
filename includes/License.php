@@ -19,11 +19,22 @@ class License {
         
         $this->cache = false;
         
-        if (class_exists('RT_Linky_License_Client')) {
+        // Prüfe bestehenden License Client nur wenn Klasse existiert
+        if (!class_exists('RT_Linky_License_Client')) {
+            // Prüfe eigene Option
+            $license = get_option('rt_linky_license');
+            if (is_array($license) && !empty($license['active'])) {
+                $this->cache = true;
+            }
+            return $this->cache;
+        }
+        
+        // Sichere Initialisierung des Clients
+        try {
             $client = \RT_Linky_License_Client::get_instance();
             
             if (!is_object($client)) {
-                return false;
+                return $this->cache;
             }
             
             if (method_exists($client, 'is_active')) {
@@ -31,16 +42,14 @@ class License {
                 return $this->cache;
             }
             
+            // Fallback auf Option
             $license_data = get_option('rt_linky_license_client_license_data');
             if (is_array($license_data) && isset($license_data['status'])) {
                 $this->cache = ($license_data['status'] === 'active');
-                return $this->cache;
             }
-        }
-        
-        $license = get_option('rt_linky_license');
-        if (is_array($license) && !empty($license['active'])) {
-            $this->cache = true;
+        } catch (\Exception $e) {
+            // Bei Fehler: Free Version
+            $this->cache = false;
         }
         
         return $this->cache;

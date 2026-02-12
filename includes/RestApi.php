@@ -27,6 +27,16 @@ class RestApi {
     }
     
     public function getLicenseStatus() {
+        if (!class_exists('RTLinky\License')) {
+            return rest_ensure_response([
+                'is_pro' => false,
+                'can_create' => true,
+                'remaining' => 2,
+                'total_profiles' => 0,
+                'error' => 'License class not found'
+            ]);
+        }
+        
         $license = License::getInstance();
         
         return rest_ensure_response([
@@ -46,6 +56,10 @@ class RestApi {
     }
     
     public function canCreateCheck() {
+        if (!class_exists('RTLinky\License')) {
+            return rest_ensure_response(['allowed' => true]);
+        }
+        
         $license = License::getInstance();
         
         if (!$license->canCreateProfile()) {
@@ -63,19 +77,32 @@ class RestApi {
     }
     
     public function addLicenseData($response, $post, $request) {
-        $license = License::getInstance();
         $data = $response->get_data();
         
         $data['license'] = [
-            'is_pro' => $license->isPro(),
+            'is_pro' => false,
             'can_edit' => true,
             'features' => [
-                'subtitles' => $license->isPro(),
-                'background_image' => $license->isPro(),
-                'verified_badge' => $license->isPro(),
-                'all_icons' => $license->isPro()
+                'subtitles' => false,
+                'background_image' => false,
+                'verified_badge' => false,
+                'all_icons' => false
             ]
         ];
+        
+        if (class_exists('RTLinky\License')) {
+            $license = License::getInstance();
+            $data['license'] = [
+                'is_pro' => $license->isPro(),
+                'can_edit' => true,
+                'features' => [
+                    'subtitles' => $license->isPro(),
+                    'background_image' => $license->isPro(),
+                    'verified_badge' => $license->isPro(),
+                    'all_icons' => $license->isPro()
+                ]
+            ];
+        }
         
         $response->set_data($data);
         return $response;

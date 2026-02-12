@@ -80,10 +80,14 @@ class RTLinkyPlugin {
     public function init() {
         $this->registerPostType();
         
-        if (is_admin()) {
+        // Nur initialisieren wenn Klassen existieren
+        if (is_admin() && class_exists('RTLinky\Admin')) {
             new RTLinky\Admin();
         }
-        new RTLinky\RestApi();
+        
+        if (class_exists('RTLinky\RestApi')) {
+            new RTLinky\RestApi();
+        }
         
         add_action('wp_enqueue_scripts', [$this, 'enqueueFrontend']);
         add_shortcode('rt_linky', [$this, 'renderShortcode']);
@@ -133,6 +137,10 @@ class RTLinkyPlugin {
     }
     
     public function checkLicense() {
+        if (!class_exists('RTLinky\License')) {
+            return;
+        }
+        
         $license = RTLinky\License::getInstance();
         
         if (!$license->isPro() && $license->getProfileCount() >= 2) {
