@@ -33,7 +33,14 @@ class RestApi {
                 'can_create' => true,
                 'remaining' => 2,
                 'total_profiles' => 0,
-                'error' => 'License class not found'
+                'features' => [
+                    'unlimited_links' => false,
+                    'all_icons' => false,
+                    'background_image' => false,
+                    'subtitles' => false,
+                    'verified_badge' => false,
+                    'custom_footer' => false
+                ]
             ]);
         }
         
@@ -79,7 +86,7 @@ class RestApi {
     public function addLicenseData($response, $post, $request) {
         $data = $response->get_data();
         
-        $data['license'] = [
+        $license_data = [
             'is_pro' => false,
             'can_edit' => true,
             'features' => [
@@ -91,19 +98,24 @@ class RestApi {
         ];
         
         if (class_exists('RTLinky\License')) {
-            $license = License::getInstance();
-            $data['license'] = [
-                'is_pro' => $license->isPro(),
-                'can_edit' => true,
-                'features' => [
-                    'subtitles' => $license->isPro(),
-                    'background_image' => $license->isPro(),
-                    'verified_badge' => $license->isPro(),
-                    'all_icons' => $license->isPro()
-                ]
-            ];
+            try {
+                $license = License::getInstance();
+                $license_data = [
+                    'is_pro' => $license->isPro(),
+                    'can_edit' => true,
+                    'features' => [
+                        'subtitles' => $license->isPro(),
+                        'background_image' => $license->isPro(),
+                        'verified_badge' => $license->isPro(),
+                        'all_icons' => $license->isPro()
+                    ]
+                ];
+            } catch (\Exception $e) {
+                // Standard-Werte behalten
+            }
         }
         
+        $data['license'] = $license_data;
         $response->set_data($data);
         return $response;
     }

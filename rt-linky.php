@@ -3,8 +3,8 @@
  * Plugin Name: RT-Linky
  * Plugin URI: https://rettoro.de/rt-linky
  * Description: Ein moderner Link-in-Bio Generator für WordPress
- * Version: 3.0.1
- * Author: Haibki für Rettoro
+ * Version: 3.0.2
+ * Author: Haibki by Rettoro
  * Author URI: https://www.rettoro.de
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -80,13 +80,19 @@ class RTLinkyPlugin {
     public function init() {
         $this->registerPostType();
         
-        // Nur initialisieren wenn Klassen existieren
-        if (is_admin() && class_exists('RTLinky\Admin')) {
-            new RTLinky\Admin();
-        }
-        
-        if (class_exists('RTLinky\RestApi')) {
-            new RTLinky\RestApi();
+        // Sichere Initialisierung mit Fehlerbehandlung
+        try {
+            if (is_admin() && class_exists('RTLinky\Admin')) {
+                new RTLinky\Admin();
+            }
+            
+            if (class_exists('RTLinky\RestApi')) {
+                new RTLinky\RestApi();
+            }
+        } catch (\Exception $e) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('RT-Linky Fehler: ' . $e->getMessage());
+            }
         }
         
         add_action('wp_enqueue_scripts', [$this, 'enqueueFrontend']);
@@ -141,10 +147,14 @@ class RTLinkyPlugin {
             return;
         }
         
-        $license = RTLinky\License::getInstance();
-        
-        if (!$license->isPro() && $license->getProfileCount() >= 2) {
-            set_transient('rt_linky_limit_notice', true, DAY_IN_SECONDS);
+        try {
+            $license = RTLinky\License::getInstance();
+            
+            if (!$license->isPro() && $license->getProfileCount() >= 2) {
+                set_transient('rt_linky_limit_notice', true, DAY_IN_SECONDS);
+            }
+        } catch (\Exception $e) {
+            // Ignoriere Fehler
         }
     }
     

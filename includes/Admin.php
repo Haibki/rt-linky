@@ -4,18 +4,15 @@ namespace RTLinky;
 class Admin {
     
     public function __construct() {
-        // Priority 20 damit CPT bereits registriert ist
-        add_action('admin_menu', [$this, 'addMenuPages'], 20);
+        add_action('admin_menu', [$this, 'addMenuPages'], 9);
         add_action('admin_enqueue_scripts', [$this, 'enqueueAssets']);
     }
     
     public function addMenuPages() {
-        // Doppelte Prüfung ob CPT existiert
         if (!post_type_exists('rt_linky_profile')) {
             return;
         }
         
-        // Prüfe ob License-Klasse verfügbar
         if (!class_exists('RTLinky\License')) {
             return;
         }
@@ -56,7 +53,6 @@ class Admin {
     }
     
     public function renderLicensePage() {
-        // Sicherheitscheck
         if (!class_exists('RTLinky\License')) {
             echo '<div class="wrap"><h1>Fehler</h1><p>License-Klasse nicht gefunden.</p></div>';
             return;

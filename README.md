@@ -1,15 +1,17 @@
-# RT-Linky 3.0
+# RT-Linky 3.0.2
 
-Ein moderner, professioneller Link-in-Bio Generator für WordPress von Rettoro (www.rettoro.de).
+Ein moderner, professioneller Link-in-Bio Generator für WordPress von **Haibki by Rettoro**.
 
 ## Autor
 
-**Haibki** für Rettoro
+**Haibki** by Rettoro
+
 - Website: https://www.rettoro.de
 
 ## Features
 
 ### Kernfeatures
+
 - **Custom Post Type** - Profile als native WordPress Posts
 - **Moderne React Admin** - React-basierte Oberfläche
 - **REST API** - Vollständige REST API
@@ -18,14 +20,31 @@ Ein moderner, professioneller Link-in-Bio Generator für WordPress von Rettoro (
 - **Statistik-Tracking** - Detaillierte Analytics
 - **SEO optimiert** - Open Graph und Twitter Cards
 
+### Free vs Pro
+
+| Feature | Free | Pro |
+|---------|------|-----|
+| Links erstellen | Max. 2 | Unbegrenzt |
+| Bestehende Links | ✅ Bleiben erhalten | ✅ Bleiben erhalten |
+| Profilbild | ✅ Erlaubt | ✅ Erlaubt |
+| Icons auswählen | ❌ Nur 2 verfügbar | ✅ Alle 25+ Icons |
+| Hintergrundbild | ❌ Nur Farben/Gradient | ✅ Bild-Upload |
+| Verifiziert-Badge | ❌ Nicht verfügbar | ✅ An/aus schaltbar |
+| Link-Untertitel | ❌ Nicht verfügbar | ✅ Pro Link individuell |
+| Footer "Erstellt mit" | ❌ Immer an | ✅ Abschaltbar |
+| Statistiken | Basis | ✅ Detailliert |
+| Premium Support | ❌ Nicht verfügbar | ✅ Inklusive |
+
 ### Design-Features
+
 - Verlaufs-Hintergründe
 - Einfarbige Hintergründe
-- Bild-Hintergründe
+- Bild-Hintergründe (Pro)
 - Benutzerdefinierte Farben
 - Border-Radius-Anpassung
-- Verifiziert-Badge
+- Verifiziert-Badge (Pro)
 - Avatar-Unterstützung
+- Link-Untertitel (Pro)
 
 ## Anforderungen
 
@@ -42,6 +61,7 @@ Ein moderner, professioneller Link-in-Bio Generator für WordPress von Rettoro (
 ## Verwendung
 
 ### Profil erstellen
+
 1. RT-Linky → Profil erstellen
 2. Name und Slug eingeben
 3. Bio und Avatar hinzufügen
@@ -50,57 +70,3 @@ Ein moderner, professioneller Link-in-Bio Generator für WordPress von Rettoro (
 6. Speichern
 
 ### Mit Shortcode einbetten
-```
-[rt-linky id="123"]
-[rt-linky slug="mein-profil"]
-```
-
-### Gutenberg Block verwenden
-1. "RT-Linky Profile" Block hinzufügen
-2. Profil aus Dropdown wählen
-
-### URL-Zugriff
-Profile erreichbar unter: `deineseite.de/link/profil-slug/`
-
-## Für Entwickler
-
-### Build-Prozess
-```bash
-cd wp-content/plugins/rt-linky
-
-# PHP Abhängigkeiten
-composer install
-
-# Node Abhängigkeiten
-npm install
-
-# Development
-npm run dev
-
-# Production
-npm run build
-```
-
-### API Endpunkte
-```
-GET    /wp-json/rt-linky/v1/profiles
-POST   /wp-json/rt-linky/v1/profiles
-GET    /wp-json/rt-linky/v1/profiles/{id}
-PUT    /wp-json/rt-linky/v1/profiles/{id}
-DELETE /wp-json/rt-linky/v1/profiles/{id}
-GET    /wp-json/rt-linky/v1/stats
-```
-
-## Lizenz
-
-GPL-2.0-or-later
-
-## Changelog
-
-### 3.0.0
-- Komplette Neuentwicklung
-- Custom Post Type statt JSON
-- React Admin Interface
-- REST API
-- Gutenberg Block
-- Erweiterte Statistiken
