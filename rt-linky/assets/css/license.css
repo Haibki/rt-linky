@@ -1,0 +1,314 @@
+/**
+ * RT-Linky License - Modern Style
+ * Separate CSS Datei (RT Stock Manager Style)
+ */
+
+.rt-linky-license-container {
+    max-width: 600px;
+    margin: 40px auto;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.rt-linky-license-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 40px;
+    text-align: center;
+    position: relative;
+}
+
+/* Back Link */
+.rt-linky-back-link {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    color: #646970;
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.2s;
+}
+
+.rt-linky-back-link:hover {
+    color: #2271b1;
+}
+
+/* Version Badge */
+.rt-linky-license-version {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: #f0f0f1;
+    color: #646970;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-family: "SF Mono", Monaco, monospace;
+}
+
+/* Icon */
+.rt-linky-license-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+}
+
+.rt-linky-license-icon.valid {
+    background: #d4edda;
+    color: #155724;
+}
+
+.rt-linky-license-icon.invalid {
+    background: #f0f0f1;
+    color: #646970;
+}
+
+/* Status Badge */
+.rt-linky-license-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.rt-linky-license-status.valid {
+    background: #d4edda;
+    color: #155724;
+}
+
+.rt-linky-license-status.invalid {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Typography */
+.rt-linky-license-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1d2327;
+    margin: 0 0 8px;
+}
+
+.rt-linky-license-subtitle {
+    color: #646970;
+    font-size: 14px;
+    margin-bottom: 32px;
+}
+
+/* Messages */
+.rt-linky-license-message {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.rt-linky-license-message.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.rt-linky-license-message.error {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Form */
+.rt-linky-license-input-wrapper {
+    margin-bottom: 12px;
+}
+
+.rt-linky-license-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #dcdcde;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: "SF Mono", Monaco, monospace;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+    box-sizing: border-box;
+}
+
+.rt-linky-license-input:focus {
+    outline: none;
+    border-color: #2271b1;
+    box-shadow: 0 0 0 3px rgba(34, 113, 177, 0.1);
+}
+
+/* Button */
+.rt-linky-license-button {
+    width: 100%;
+    padding: 14px 24px;
+    background: #2271b1;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.rt-linky-license-button:hover {
+    background: #135e96;
+}
+
+.rt-linky-license-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.rt-linky-license-button--danger {
+    background: #d63638;
+}
+
+.rt-linky-license-button--danger:hover {
+    background: #b32d2e;
+}
+
+/* Help Text */
+.rt-linky-license-help {
+    margin: 20px 0;
+    font-size: 13px;
+    color: #646970;
+}
+
+.rt-linky-license-help a {
+    color: #2271b1;
+    text-decoration: none;
+}
+
+.rt-linky-license-help a:hover {
+    text-decoration: underline;
+}
+
+/* Info Section */
+.rt-linky-license-info {
+    margin: 24px 0;
+    padding: 20px;
+    background: #f6f7f7;
+    border-radius: 8px;
+    text-align: left;
+}
+
+.rt-linky-license-info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 13px;
+    border-bottom: 1px solid #dcdcde;
+}
+
+.rt-linky-license-info-row:last-child {
+    border-bottom: none;
+}
+
+.rt-linky-license-info-label {
+    color: #646970;
+}
+
+.rt-linky-license-info-value {
+    color: #1d2327;
+    font-weight: 500;
+}
+
+.rt-linky-license-info-value code {
+    background: #f0f0f1;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+/* Features */
+.rt-linky-license-features {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #dcdcde;
+    text-align: left;
+}
+
+.rt-linky-license-features h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1d2327;
+    margin: 0 0 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.rt-linky-license-features ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.rt-linky-license-features li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    font-size: 14px;
+    color: #646970;
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.rt-linky-license-features li:last-child {
+    border-bottom: none;
+}
+
+.rt-linky-license-features li.available {
+    color: #155724;
+}
+
+.rt-linky-license-features li.locked {
+    color: #646970;
+}
+
+.rt-linky-license-features li span {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 12px;
+}
+
+.rt-linky-license-features li.available span {
+    background: #d4edda;
+    color: #155724;
+}
+
+.rt-linky-license-features li.locked span {
+    background: #f0f0f1;
+    color: #646970;
+}
+
+/* Responsive */
+@media screen and (max-width: 782px) {
+    .rt-linky-license-container {
+        margin: 20px;
+    }
+    
+    .rt-linky-license-card {
+        padding: 24px;
+    }
+    
+    .rt-linky-license-version,
+    .rt-linky-back-link {
+        position: static;
+        display: inline-block;
+        margin-bottom: 16px;
+    }
+}
